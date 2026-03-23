@@ -1,0 +1,156 @@
+IF NOT EXISTS (
+    SELECT name 
+    FROM sys.databases 
+    WHERE name = N'targets_db'
+)
+BEGIN
+    CREATE DATABASE targets_db;
+END;
+GO
+
+USE targets_db;
+--
+-- Table structure for table `city_target_passenger_rating`
+--
+
+IF OBJECT_ID('city_target_passenger_rating', 'U') IS NOT NULL
+    DROP TABLE city_target_passenger_rating;
+GO
+
+CREATE TABLE city_target_passenger_rating (
+    city_id VARCHAR(5) NOT NULL,
+    target_avg_passenger_rating DECIMAL(3,2) NULL,
+    CONSTRAINT PK_city_target_passenger_rating PRIMARY KEY (city_id)
+);
+
+--
+-- Dumping data for table `city_target_passenger_rating`
+--
+
+-- Table locks are typically not used explicitly in SQL Server for simple inserts,
+-- so `LOCK TABLES` and `UNLOCK TABLES` can be omitted.
+
+-- Disable constraints/indexes (not usually necessary unless importing large data in bulk).
+-- For now, we just insert the values directly.
+
+INSERT INTO city_target_passenger_rating (city_id, target_avg_passenger_rating)
+VALUES 
+    ('AP01', 8.50),
+    ('CH01', 8.00),
+    ('GJ01', 7.00),
+    ('GJ02', 7.50),
+    ('KA01', 8.50),
+    ('KL01', 8.50),
+    ('MP01', 8.00),
+    ('RJ01', 8.25),
+    ('TN01', 8.25),
+    ('UP01', 7.25);
+
+--
+-- Table structure for table `monthly_target_new_passengers`
+--
+
+IF OBJECT_ID('monthly_target_new_passengers', 'U') IS NOT NULL
+    DROP TABLE monthly_target_new_passengers;
+GO
+
+CREATE TABLE monthly_target_new_passengers (
+    [month] DATE NOT NULL,
+    city_id VARCHAR(5) NOT NULL,
+    target_new_passengers INT NULL,
+    CONSTRAINT PK_monthly_target_new_passengers PRIMARY KEY ([month], city_id)
+);
+
+
+--
+-- Dumping data for table `monthly_target_new_passengers`
+--
+
+-- Table locking and disabling/enabling keys are unnecessary here
+-- for moderate inserts, so they are omitted.
+
+INSERT INTO monthly_target_new_passengers ([month], city_id, target_new_passengers)
+VALUES 
+    ('2024-01-01','AP01',2500), ('2024-01-01','CH01',4000), ('2024-01-01','GJ01',2000),
+    ('2024-01-01','GJ02',1800), ('2024-01-01','KA01',2000), ('2024-01-01','KL01',5000),
+    ('2024-01-01','MP01',2700), ('2024-01-01','RJ01',12000), ('2024-01-01','TN01',1500),
+    ('2024-01-01','UP01',3200),
+
+    ('2024-02-01','AP01',2500), ('2024-02-01','CH01',4000), ('2024-02-01','GJ01',2000),
+    ('2024-02-01','GJ02',1800), ('2024-02-01','KA01',2000), ('2024-02-01','KL01',5000),
+    ('2024-02-01','MP01',2700), ('2024-02-01','RJ01',12000), ('2024-02-01','TN01',1500),
+    ('2024-02-01','UP01',3200),
+
+    ('2024-03-01','AP01',2500), ('2024-03-01','CH01',4000), ('2024-03-01','GJ01',2000),
+    ('2024-03-01','GJ02',1800), ('2024-03-01','KA01',2000), ('2024-03-01','KL01',5000),
+    ('2024-03-01','MP01',2700), ('2024-03-01','RJ01',12000), ('2024-03-01','TN01',1500),
+    ('2024-03-01','UP01',3200),
+
+    ('2024-04-01','AP01',2000), ('2024-04-01','CH01',3000), ('2024-04-01','GJ01',1500),
+    ('2024-04-01','GJ02',1500), ('2024-04-01','KA01',2000), ('2024-04-01','KL01',4000),
+    ('2024-04-01','MP01',2000), ('2024-04-01','RJ01',6000), ('2024-04-01','TN01',1000),
+    ('2024-04-01','UP01',2000),
+
+    ('2024-05-01','AP01',2000), ('2024-05-01','CH01',3000), ('2024-05-01','GJ01',1500),
+    ('2024-05-01','GJ02',1500), ('2024-05-01','KA01',2000), ('2024-05-01','KL01',4000),
+    ('2024-05-01','MP01',2000), ('2024-05-01','RJ01',6000), ('2024-05-01','TN01',1000),
+    ('2024-05-01','UP01',2000),
+
+    ('2024-06-01','AP01',2000), ('2024-06-01','CH01',3000), ('2024-06-01','GJ01',1500),
+    ('2024-06-01','GJ02',1500), ('2024-06-01','KA01',2000), ('2024-06-01','KL01',4000),
+    ('2024-06-01','MP01',2000), ('2024-06-01','RJ01',6000), ('2024-06-01','TN01',1000),
+    ('2024-06-01','UP01',2000);
+
+--
+-- Table structure for table `monthly_target_trips`
+--
+
+IF OBJECT_ID('dbo.monthly_target_trips', 'U') IS NOT NULL
+    DROP TABLE dbo.monthly_target_trips;
+
+CREATE TABLE dbo.monthly_target_trips (
+    [month] DATE NOT NULL,
+    city_id VARCHAR(5) NOT NULL,
+    total_target_trips INT NULL,
+    CONSTRAINT PK_monthly_target_trips PRIMARY KEY ([month], city_id)
+);
+
+
+--
+-- Dumping data for table `monthly_target_trips`
+--
+
+INSERT INTO dbo.monthly_target_trips (month, city_id, total_target_trips)
+VALUES 
+('2024-01-01','AP01',4500), ('2024-01-01','CH01',7000), ('2024-01-01','GJ01',9000),
+('2024-01-01','GJ02',6000), ('2024-01-01','KA01',2000), ('2024-01-01','KL01',7500),
+('2024-01-01','MP01',7000), ('2024-01-01','RJ01',13000), ('2024-01-01','TN01',3500),
+('2024-01-01','UP01',13000),
+
+('2024-02-01','AP01',4500), ('2024-02-01','CH01',7000), ('2024-02-01','GJ01',9000),
+('2024-02-01','GJ02',6000), ('2024-02-01','KA01',2000), ('2024-02-01','KL01',7500),
+('2024-02-01','MP01',7000), ('2024-02-01','RJ01',13000), ('2024-02-01','TN01',3500),
+('2024-02-01','UP01',13000),
+
+('2024-03-01','AP01',4500), ('2024-03-01','CH01',7000), ('2024-03-01','GJ01',9000),
+('2024-03-01','GJ02',6000), ('2024-03-01','KA01',2000), ('2024-03-01','KL01',7500),
+('2024-03-01','MP01',7000), ('2024-03-01','RJ01',13000), ('2024-03-01','TN01',3500),
+('2024-03-01','UP01',13000),
+
+('2024-04-01','AP01',5000), ('2024-04-01','CH01',6000), ('2024-04-01','GJ01',10000),
+('2024-04-01','GJ02',6500), ('2024-04-01','KA01',2500), ('2024-04-01','KL01',9000),
+('2024-04-01','MP01',7500), ('2024-04-01','RJ01',9500), ('2024-04-01','TN01',3500),
+('2024-04-01','UP01',11000),
+
+('2024-05-01','AP01',5000), ('2024-05-01','CH01',6000), ('2024-05-01','GJ01',10000),
+('2024-05-01','GJ02',6500), ('2024-05-01','KA01',2500), ('2024-05-01','KL01',9000),
+('2024-05-01','MP01',7500), ('2024-05-01','RJ01',9500), ('2024-05-01','TN01',3500),
+('2024-05-01','UP01',11000),
+
+('2024-06-01','AP01',5000), ('2024-06-01','CH01',6000), ('2024-06-01','GJ01',10000),
+('2024-06-01','GJ02',6500), ('2024-06-01','KA01',2500), ('2024-06-01','KL01',9000),
+('2024-06-01','MP01',7500), ('2024-06-01','RJ01',9500), ('2024-06-01','TN01',3500),
+('2024-06-01','UP01',11000);
+;
+
+-- Dump completed on 2024-11-08  9:43:46
